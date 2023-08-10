@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Resturant  from "./Resturant";
+import Api from "./Api";
+import "./Style.css";
+import Footer from "./Footer";
 
-function App() {
+const App = () => {
+  const [currdata, updata] = useState(Api);
+  const searchfun =(Time)=>{
+     const updatedlist = Api.filter((elem)=>{
+      return elem.time === Time;
+     })
+     updata(updatedlist);
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+       <div className="nav-container">
+                <ul className="unorderlist">
+                    <li className="li1"  onClick={()=>updata(Api)}>Home</li>
+                    <li className="Breakfast"  onClick={()=>searchfun("Breakfast")}>BreakFast</li>
+                    <li className="li1"  onClick={()=>searchfun("Lunch")}>Lunch</li>
+                    <li className="li1"  onClick={()=>searchfun("Dinner")}>Dinner</li>
+                    <li className="all"  onClick={()=>updata(Api)}>All</li>
+                </ul>
+
+         </div>
+
+      <div className="card-container">
+        <Resturant curdata={currdata} />
+      </div>
+      <Footer/>
+    </>
+  )
 }
+
+
 
 export default App;
